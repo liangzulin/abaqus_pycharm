@@ -1,8 +1,14 @@
 from os import environ
-from abaqus import *
-from abaqusConstants import *
-from caeModules import mesh
-from driverUtils import executeOnCaeStartup
+try:
+    from import_file.abaqus import *
+    from import_file.abaqusConstants import *
+    from import_file.caeModules import mesh
+    from import_file.driverUtils import executeOnCaeStartup
+except ImportError:
+    from abaqus import *
+    from abaqusConstants import *
+    from caeModules import mesh
+    from driverUtils import executeOnCaeStartup
 
 environ['ABAQUS_BAT_PATH'] = 'D:\\SIMULIA\\Abaqus\\Commands\\abaqus'
 environ['ABAQUS_BAT_SETTING'] = 'noGUI'
