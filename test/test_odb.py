@@ -92,5 +92,6 @@ if __name__ == '__main__':
     open_odb = OpenOdb()
     open_odb.get_data()
     path_list = open_odb.get_odb_paths()
+    # path_list.append('abc_test')
     for path_single in path_list:
         open_odb.get_forces(path_single)

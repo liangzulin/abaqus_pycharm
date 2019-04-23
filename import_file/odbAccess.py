@@ -71,6 +71,7 @@ def openOdb(path):
 class Odb:
 
     def __init__(self, name, path, analysisTitle, description):
+        self.not_run_yet = True
         self.rootAssembly = InstanceClass()
         assert isinstance(name, str)
         assert isinstance(path, str)
@@ -103,16 +104,24 @@ class Odb:
         return StepClass()
 
     def save(self, pathName=None):
-        if isinstance(self.debug, bool) and self.debug:
-            print(pathName)
-        if 'ABAQUS_BAT_SETTING' in os.environ.keys():
-            self.abaqus_bat_setting = os.environ['ABAQUS_BAT_SETTING']
-        if 'ABAQUS_BAT_PATH' in os.environ.keys():
-            self.abaqus_bat_path = os.environ['ABAQUS_BAT_PATH']
-        os.system(self.abaqus_bat_path + ' cae -' + self.abaqus_bat_setting + ' ' + os.path.abspath(sys.argv[0]))
+        if self.not_run_yet:
+            if isinstance(self.debug, bool) and self.debug:
+                print(pathName)
+            if 'ABAQUS_BAT_SETTING' in os.environ.keys():
+                self.abaqus_bat_setting = os.environ['ABAQUS_BAT_SETTING']
+            if 'ABAQUS_BAT_PATH' in os.environ.keys():
+                self.abaqus_bat_path = os.environ['ABAQUS_BAT_PATH']
+            self.not_run_yet = False
+            os.system(self.abaqus_bat_path + ' cae -' + self.abaqus_bat_setting + ' ' + os.path.abspath(sys.argv[0]))
 
     def close(self):
-        pass
+        if self.not_run_yet:
+            if 'ABAQUS_BAT_SETTING' in os.environ.keys():
+                self.abaqus_bat_setting = os.environ['ABAQUS_BAT_SETTING']
+            if 'ABAQUS_BAT_PATH' in os.environ.keys():
+                self.abaqus_bat_path = os.environ['ABAQUS_BAT_PATH']
+            self.not_run_yet = False
+            os.system(self.abaqus_bat_path + ' cae -' + self.abaqus_bat_setting + ' ' + os.path.abspath(sys.argv[0]))
 
 
 class Step:
