@@ -2,7 +2,6 @@
 import os
 import sys
 
-
 ON = 1
 OFF = 0
 
@@ -165,9 +164,17 @@ class Parts:
     def setElementType(self, regions, elemTypes):
         pass
 
+    def addNodes(self, nodeData, nodeSetName='nset-1'):
+        pass
+
+    def addElements(self, elementData, type, elementSetName=None, sectionCategory=None):
+        # type: (object, str, str, SectionCategoryClass) -> None
+        pass
+
 
 class MaterialClass:
-    def Elastic(self, table):
+    def Elastic(self, table=None, type=None, temperatureDependency=OFF, dependencies=0, noCompression=OFF, noTension=OFF,
+                moduli=None):
         pass
 
 
